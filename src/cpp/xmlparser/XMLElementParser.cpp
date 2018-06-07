@@ -1488,8 +1488,12 @@ XMLP_ret XMLParser::getXMLUint(tinyxml2::XMLElement *elem, unsigned int *ui, uin
 XMLP_ret XMLParser::getXMLUint(tinyxml2::XMLElement *elem, uint16_t *ui16, uint8_t /*ident*/)
 {
     unsigned int ui = 0u;
-    if (nullptr == elem ||
-        nullptr == ui16   ||
+    if (nullptr == elem)
+    {
+        logError(XMLPARSER, "nullptr when getXMLUint XML_ERROR!");
+        return XMLP_ret::XML_ERROR;
+    } 
+    else if (nullptr == ui16   ||
         tinyxml2::XMLError::XML_SUCCESS != elem->QueryUnsignedText(&ui) ||
         ui >= 65536)
     {
